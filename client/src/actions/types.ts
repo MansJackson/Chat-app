@@ -1,0 +1,6 @@
+export const SUBMIT_NICKNAME = 'SUBMIT_NICKANME';
+export const ADD_MESSAGE = 'ADD_MESSAGE';
+export const SET_NOTIFICATION = 'SET_NOTIFICATION';
+export const SET_NICKNAME = 'SET_NICKNAME';
+export const SET_INPUT = 'SET_INPUT';
+export const CLEAR_MESSAGES = 'CLEAR_MESSAGES';
