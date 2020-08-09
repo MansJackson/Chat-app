@@ -36,7 +36,11 @@ export default function ChatMessage(
       <>
         {type === 'recieved' ? <Grid item xs={4} md={7} /> : null}
         <Grid item xs={8} md={5}>
-          <Card className={`${classes.chat__message} ${type === 'sent' ? classes.blue : classes.gray}`}>
+          <Card 
+            className={
+              `${classes.chat__message}
+              ${type === 'sent' ? classes.sent_message : classes.recieved_message}`
+            }>
             <CardContent>
               <Typography className={classes.message__title} color="textSecondary">
                 {name}

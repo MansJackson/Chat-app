@@ -24,7 +24,7 @@ function Chat(props: IChatProps) {
 
   useEffect(() => {
     setInput('');
-    socket = io('http://localhost:8000', { reconnection: false });
+    socket = io(window.location.href, { reconnection: false });
 
     socket.on('connect', () => {
       socket.emit('nickname', nickname);

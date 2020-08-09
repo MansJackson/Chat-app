@@ -12,11 +12,11 @@ export default makeStyles((theme) => ({
     bottom: '5rem',
     right: '1rem',
   },
-  blue: {
-    backgroundColor: '#cfe8ff',
+  sent_message: {
+    backgroundColor: '#cfe8ff !important',
   },
-  gray: {
-    backgroundColor: '#dddddd',
+  recieved_message: {
+    backgroundColor: '#dddddd !important',
   },
   notification: {
     position: 'fixed',
