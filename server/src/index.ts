@@ -39,3 +39,5 @@ process.on('SIGTERM', () => {
 });
 
 server.listen(PORT);
+
+export default app;
