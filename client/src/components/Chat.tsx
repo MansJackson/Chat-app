@@ -81,7 +81,7 @@ function Chat(props: IChatProps) {
   return (
     <Grid container justify="center" className={classes.chat}>
       <Button
-        onClick={() => exitChat()}
+        onClick={exitChat}
         className={classes.disconnect_btn}
         variant="contained"
         size="small"

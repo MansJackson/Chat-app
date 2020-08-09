@@ -11,6 +11,7 @@ export default makeStyles((theme) => ({
     position: 'fixed',
     bottom: '5rem',
     right: '1rem',
+    zIndex: 1,
   },
   sent_message: {
     backgroundColor: '#cfe8ff !important',
