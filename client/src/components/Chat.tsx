@@ -50,11 +50,11 @@ function Chat(props: IChatProps) {
   useEffect(() => {
     setInput('');
     socket = io(window.location.href, { reconnection: false });
-    
+
     socket.on('connect', () => {
       socket.emit('nickname', nickname);
       updateUsers();
-    }); 
+    });
 
     socket.on('connect_error', () => {
       socket.close();
@@ -158,6 +158,7 @@ function Chat(props: IChatProps) {
                 id="standard-adornment-password"
                 type="text"
                 value={input}
+                autoFocus
                 onChange={(e) => {
                   setInput(e.target.value);
                   scrollToBottom();
