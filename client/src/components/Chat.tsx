@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import io from 'socket.io-client';
 import { v4 as uuidv4 } from 'uuid';
 import {
-  Input, FormControl, InputLabel, InputAdornment, IconButton, Grid, Button,
+  Input, FormControl, InputLabel, InputAdornment, IconButton, Grid, Button, AppBar, Toolbar, Typography
 } from '@material-ui/core';
 import SendIcon from '@material-ui/icons/Send';
 import useStyles from '../styles';
@@ -50,9 +50,10 @@ function Chat(props: IChatProps) {
 
     socket.on('chat-message', (data: IChatMessage) => {
       recievedMsg(data.nickname, data.message, data.type);
+      scrollToBottom();
     });
 
-    socket.on('timeout', (data: {message: string}) => {
+    socket.on('timeout', (data: { message: string }) => {
       socket.close();
       discon();
       notify(data.message);
@@ -67,8 +68,10 @@ function Chat(props: IChatProps) {
   }, []);
 
   function verifyMessage() {
-    if (input.trim().length > 0) sendMsg(nickname, input, socket);
-    else notify('Message can not be empty');
+    if (input.trim().length > 0) {
+      sendMsg(nickname, input, socket);
+      scrollToBottom();
+    } else notify('Message can not be empty');
     setInput('');
   }
 
@@ -78,8 +81,23 @@ function Chat(props: IChatProps) {
     notify('You left the chat');
   }
 
+  function scrollToBottom() {
+    setTimeout(() => {
+      window.scrollTo(0, document.body.offsetHeight);
+    }, 100);
+  }
+
   return (
-    <Grid container justify="center" className={classes.chat}>
+    <>
+      <div className={classes.chat_topbar}>
+        <AppBar position="static">
+          <Toolbar variant="dense">
+            <Typography variant="h6" color="inherit">
+              Chat
+          </Typography>
+          </Toolbar>
+        </AppBar>
+      </div>
       <Button
         onClick={exitChat}
         className={classes.disconnect_btn}
@@ -89,53 +107,52 @@ function Chat(props: IChatProps) {
       >
         Disconnect
       </Button>
-      <Grid className={classes.chat__header} item xs={12} sm={10} md={8}>
-        <h1>
-          Welcome
-          {' '}
-          {nickname}
-        </h1>
+      <Grid container justify="center" className={classes.chat}>
+        <Grid item xs={12} sm={10} md={8}>
+          {messages.length > 0
+            ? messages.map((el) => (
+              <ChatBox
+                key={uuidv4()}
+                name={el.nickname}
+                message={el.message}
+                type={el.type}
+              />
+            ))
+            : null}
+        </Grid>
+        <Grid className={classes.chat__footer} item xs={12} sm={10} md={8}>
+          <form
+            autoComplete="off"
+            className={classes.chat__form}
+            onSubmit={(e) => {
+              e.preventDefault();
+              verifyMessage();
+            }}
+          >
+            <FormControl fullWidth>
+              <InputLabel htmlFor="standard-adornment-password">Message</InputLabel>
+              <Input
+                id="standard-adornment-password"
+                type="text"
+                value={input}
+                onChange={(e) => {
+                  setInput(e.target.value);
+                  scrollToBottom();
+                }}
+                onFocus={scrollToBottom}
+                endAdornment={(
+                  <InputAdornment position="end">
+                    <IconButton onClick={verifyMessage}>
+                      <SendIcon />
+                    </IconButton>
+                  </InputAdornment>
+                )}
+              />
+            </FormControl>
+          </form>
+        </Grid>
       </Grid>
-      <Grid item xs={12} sm={10} md={8}>
-        {messages.length > 0
-          ? messages.map((el) => (
-            <ChatBox
-              key={uuidv4()}
-              name={el.nickname}
-              message={el.message}
-              type={el.type}
-            />
-          ))
-          : null}
-      </Grid>
-      <Grid className={classes.chat__footer} item xs={12} sm={10} md={8}>
-        <form
-          autoComplete="off"
-          className={classes.chat__form}
-          onSubmit={(e) => {
-            e.preventDefault();
-            verifyMessage();
-          }}
-        >
-          <FormControl fullWidth>
-            <InputLabel htmlFor="standard-adornment-password">Message</InputLabel>
-            <Input
-              id="standard-adornment-password"
-              type="text"
-              value={input}
-              onChange={(e) => setInput(e.target.value)}
-              endAdornment={(
-                <InputAdornment position="end">
-                  <IconButton onClick={verifyMessage}>
-                    <SendIcon />
-                  </IconButton>
-                </InputAdornment>
-              )}
-            />
-          </FormControl>
-        </form>
-      </Grid>
-    </Grid>
+    </>
   );
 }
 

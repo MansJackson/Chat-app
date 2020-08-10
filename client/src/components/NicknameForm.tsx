@@ -1,5 +1,5 @@
 import React from 'react';
-import { Grid, TextField, Button } from '@material-ui/core';
+import { Grid, TextField, Button, Typography } from '@material-ui/core';
 import { connect } from 'react-redux';
 import submitNickname from '../actions/nicknameFormActions';
 import updateInput from '../actions/inputActions';
@@ -21,6 +21,9 @@ function NicknameForm(props: INicknameFormProps & INicknameFormDispatch): JSX.El
         noValidate
         autoComplete="off"
       >
+        <Typography align="center" component="h4" variant="h4">
+          Choose a nickname
+        </Typography>
         <TextField
           onChange={(e) => {
             setInput(e.target.value);

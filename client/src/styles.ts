@@ -7,9 +7,15 @@ export default makeStyles((theme) => ({
       width: '100%',
     },
   },
+  chat_topbar: {
+    width: 'fill-available',
+    position: 'fixed',
+    top: '0',
+    left: '0'
+  },
   disconnect_btn: {
     position: 'fixed',
-    bottom: '5rem',
+    top: '.5rem',
     right: '1rem',
     zIndex: 1,
   },
@@ -28,7 +34,7 @@ export default makeStyles((theme) => ({
     borderRadius: '.2rem',
   },
   wrapper: {
-    padding: '1rem',
+
   },
   h100: {
     minHeight: '100vh',
@@ -38,18 +44,19 @@ export default makeStyles((theme) => ({
   },
   chat: {
     maxWidth: '800px',
-    minHeight: '100vh',
     margin: '0 auto',
     textAlign: 'center',
+    padding: '4rem 0',
   },
   chat__header: {
     height: 'fit-content',
   },
   chat__footer: {
-    position: 'sticky',
+    position: 'fixed',
     bottom: '1rem',
     alignItems: 'flex-end',
     display: 'flex',
+    width: 'fill-available'
   },
   chat__form: {
     width: '90%',

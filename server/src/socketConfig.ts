@@ -22,7 +22,7 @@ export default (io: Server): Namespace => io.on('connection', (socket: SocketIO.
       'chat-message',
       { nickname: name, message: disconnectMessage || 'left the chat', type: 'disconnect' },
     );
-    removeUser(name);
+    if (name) removeUser(name);
     disconnectMessage = null;
     clearInterval(interval);
   });

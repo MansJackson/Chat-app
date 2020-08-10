@@ -40,4 +40,4 @@ process.on('SIGTERM', () => {
 
 server.listen(PORT);
 
-export default app;
+export {server, app};

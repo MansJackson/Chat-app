@@ -12,9 +12,10 @@
 			"*": [
 				"node_modules/*"
 			]
-		}
+		},
+		"rootDir": "src"
 	},
 	"include": [
-		"src/**/*"
+		"./src/**/*"
 	]
 }

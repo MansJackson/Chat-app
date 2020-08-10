@@ -7,7 +7,7 @@
     "lint": "eslint **/*.ts --ext .ts --fix",
     "prestart": "tsc",
     "start": "nodemon --watch src/**/*.ts",
-    "test": "jest"
+    "test": "jest --detectOpenHandles"
   },
   "author": "",
   "license": "ISC",
