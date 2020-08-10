@@ -1,4 +1,6 @@
-import { isValidName, addUser, removeUser, getUsers, clearUsers } from './util';
+import {
+  isValidName, addUser, removeUser, getUsers, clearUsers,
+} from './util';
 
 describe('Utility functions', () => {
   afterEach(() => { clearUsers(); });
@@ -24,7 +26,7 @@ describe('Utility functions', () => {
       clearUsers();
       expect(getUsers()).toEqual([]);
     });
-  })
+  });
 
   describe('the addUser function', () => {
     it('should add the passed in name to the users array', () => {
@@ -61,7 +63,6 @@ describe('Utility functions', () => {
       addUser('erik');
       addUser('johanna');
       removeUser('JohAnnA');
-    })
-  })
-
+    });
+  });
 });

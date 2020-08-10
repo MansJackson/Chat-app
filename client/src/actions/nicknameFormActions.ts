@@ -4,14 +4,14 @@ import { IValidNameResponse } from '../interfaces';
 
 export default (nickname: string) => (dispatch: Dispatch): void => {
   fetch(`/api/users/${nickname}`)
-    .then((res) => res.json())
-    .then((res: IValidNameResponse) => {
+    .then((res): Promise<IValidNameResponse> => res.json())
+    .then((res: IValidNameResponse): void => {
       if (!res.valid) {
         dispatch({
           type: SET_NOTIFICATION,
           payload: res.message,
         });
-        setTimeout(() => {
+        setTimeout((): void => {
           dispatch({
             type: SET_NOTIFICATION,
             payload: '',
@@ -24,7 +24,7 @@ export default (nickname: string) => (dispatch: Dispatch): void => {
         });
       }
     })
-    .catch(() => {
+    .catch((): void => {
       dispatch({
         type: SET_NOTIFICATION,
         payload: 'Unable to connect to server',

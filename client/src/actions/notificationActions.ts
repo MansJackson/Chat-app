@@ -6,7 +6,7 @@ const notification = (message: string) => (dispatch: Dispatch): void => {
     type: SET_NOTIFICATION,
     payload: message,
   });
-  setTimeout(() => {
+  setTimeout((): void => {
     dispatch({
       type: SET_NOTIFICATION,
       payload: '',

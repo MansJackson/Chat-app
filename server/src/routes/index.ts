@@ -17,4 +17,9 @@ router.get('/users/:nickname', (req: Request, res: Response) => {
   res.status(200).json({ valid: true, message: '' });
 });
 
+router.get('/users', (req: Request, res: Response) => {
+  const users = getUsers();
+  res.status(200).json(users);
+});
+
 export default router;

@@ -1,7 +1,7 @@
-import { getUsers } from './util';
 import io from 'socket.io-client';
 import http from 'http';
 import ioBack from 'socket.io';
+import { getUsers } from './util';
 import socketConfig from './socketConfig';
 
 interface IChatMessage {
@@ -19,8 +19,8 @@ beforeAll((done) => {
   httpServer = http.createServer().listen(8080);
   ioServer = ioBack(httpServer);
   socketConfig(ioServer);
-  socket = io.connect(`http://localhost:8080`);
-  socket2 = io.connect(`http://localhost:8080`);
+  socket = io.connect('http://localhost:8080');
+  socket2 = io.connect('http://localhost:8080');
   socket.on('connect', () => {
     socket.emit('nickname', 'johan');
   });
@@ -29,7 +29,7 @@ beforeAll((done) => {
       socket.emit('nickname', 'johanna');
     });
     done();
-  }, 100)
+  }, 100);
 });
 
 afterAll((done) => {
@@ -62,7 +62,7 @@ describe('the server side socket', () => {
       expect(message).toEqual({
         nickname: 'johan',
         message: 'hejsan',
-        type: 'recieved'
+        type: 'recieved',
       });
       done();
     });
@@ -74,7 +74,7 @@ describe('the server side socket', () => {
       expect(message).toEqual({
         nickname: 'johan',
         message: 'left the chat',
-        type: 'disconnect'
+        type: 'disconnect',
       });
     });
     setTimeout(() => {
@@ -87,6 +87,6 @@ describe('the server side socket', () => {
         });
         done();
       });
-    }, 50)
-  })
+    }, 50);
+  });
 });

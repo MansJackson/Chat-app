@@ -3,12 +3,22 @@ import { connect } from 'react-redux';
 import io from 'socket.io-client';
 import { v4 as uuidv4 } from 'uuid';
 import {
-  Input, FormControl, InputLabel, InputAdornment, IconButton, Grid, Button, AppBar, Toolbar, Typography
+  Input,
+  FormControl,
+  InputLabel,
+  InputAdornment,
+  IconButton,
+  Grid,
+  Button,
+  AppBar,
+  Toolbar,
+  Typography,
 } from '@material-ui/core';
 import SendIcon from '@material-ui/icons/Send';
 import useStyles from '../styles';
 
 import { sendMessage, recievedMessage, disconnect } from '../actions/chatActions';
+import updateUserCount from '../actions/userCountActions';
 import notification from '../actions/notificationActions';
 import updateInput from '../actions/inputActions';
 import ChatBox from './ChatMessage';
@@ -18,17 +28,33 @@ let socket: SocketIOClient.Socket;
 
 function Chat(props: IChatProps) {
   const {
-    nickname, messages, input, sendMsg, recievedMsg, setInput, discon, notify,
+    userCount,
+    nickname,
+    messages,
+    input,
+    sendMsg,
+    recievedMsg,
+    setInput,
+    discon,
+    notify,
+    updateUsers,
   } = props;
   const classes = useStyles();
+
+  function scrollToBottom() {
+    setTimeout(() => {
+      window.scrollTo(0, document.body.offsetHeight);
+    }, 100);
+  }
 
   useEffect(() => {
     setInput('');
     socket = io(window.location.href, { reconnection: false });
-
+    
     socket.on('connect', () => {
       socket.emit('nickname', nickname);
-    });
+      updateUsers();
+    }); 
 
     socket.on('connect_error', () => {
       socket.close();
@@ -50,6 +76,7 @@ function Chat(props: IChatProps) {
 
     socket.on('chat-message', (data: IChatMessage) => {
       recievedMsg(data.nickname, data.message, data.type);
+      updateUsers();
       scrollToBottom();
     });
 
@@ -81,20 +108,16 @@ function Chat(props: IChatProps) {
     notify('You left the chat');
   }
 
-  function scrollToBottom() {
-    setTimeout(() => {
-      window.scrollTo(0, document.body.offsetHeight);
-    }, 100);
-  }
-
   return (
     <>
       <div className={classes.chat_topbar}>
         <AppBar position="static">
           <Toolbar variant="dense">
             <Typography variant="h6" color="inherit">
-              Chat
-          </Typography>
+              Connected users:
+              {' '}
+              {userCount}
+            </Typography>
           </Toolbar>
         </AppBar>
       </div>
@@ -160,6 +183,7 @@ const mapStateToProps = (state: IRootState) => ({
   messages: state.messages,
   nickname: state.nickname,
   input: state.input,
+  userCount: state.userCount,
 });
 
 export default connect(mapStateToProps, {
@@ -168,5 +192,6 @@ export default connect(mapStateToProps, {
   setInput: updateInput,
   discon: disconnect,
   notify: notification,
+  updateUsers: updateUserCount,
   // @ts-ignore
 })(Chat);

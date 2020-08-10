@@ -11,7 +11,7 @@ export default makeStyles((theme) => ({
     width: 'fill-available',
     position: 'fixed',
     top: '0',
-    left: '0'
+    left: '0',
   },
   disconnect_btn: {
     position: 'fixed',
@@ -56,7 +56,7 @@ export default makeStyles((theme) => ({
     bottom: '1rem',
     alignItems: 'flex-end',
     display: 'flex',
-    width: 'fill-available'
+    width: 'fill-available',
   },
   chat__form: {
     width: '90%',

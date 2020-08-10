@@ -3,10 +3,12 @@ import nicknameReducer from './nicknameReducer';
 import chatReducer from './chatReducer';
 import notificationReducer from './notificationReducer';
 import inputReducer from './inputReducer';
+import userCountReducer from './userCountReducer';
 
 export default combineReducers({
   nickname: nicknameReducer,
   messages: chatReducer,
   notification: notificationReducer,
   input: inputReducer,
+  userCount: userCountReducer,
 });

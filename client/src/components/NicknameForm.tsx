@@ -1,5 +1,7 @@
 import React from 'react';
-import { Grid, TextField, Button, Typography } from '@material-ui/core';
+import {
+  Grid, TextField, Button, Typography,
+} from '@material-ui/core';
 import { connect } from 'react-redux';
 import submitNickname from '../actions/nicknameFormActions';
 import updateInput from '../actions/inputActions';
