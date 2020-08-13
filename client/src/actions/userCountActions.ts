@@ -1,5 +1,5 @@
 import { Dispatch } from 'redux';
-import { SET_USERCOUNT, SET_NOTIFICATION } from './types';
+import { SET_USERCOUNT, SET_NOTIFICATION, SET_USERLIST } from './types';
 
 export default () => (dispatch: Dispatch): void => {
   fetch('/api/users')
@@ -8,6 +8,10 @@ export default () => (dispatch: Dispatch): void => {
       dispatch({
         type: SET_USERCOUNT,
         payload: users.length,
+      });
+      dispatch({
+        type: SET_USERLIST,
+        payload: users,
       });
     })
     .catch((err: Error): void => {

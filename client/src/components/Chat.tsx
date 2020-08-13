@@ -13,6 +13,7 @@ import {
   AppBar,
   Toolbar,
   Typography,
+  Popover,
 } from '@material-ui/core';
 import SendIcon from '@material-ui/icons/Send';
 import useStyles from '../styles';
@@ -28,6 +29,7 @@ let socket: SocketIOClient.Socket;
 
 function Chat(props: IChatProps) {
   const {
+    users,
     userCount,
     nickname,
     messages,
@@ -40,6 +42,18 @@ function Chat(props: IChatProps) {
     updateUsers,
   } = props;
   const classes = useStyles();
+  const [anchorEl, setAnchorEl] = React.useState<HTMLButtonElement | null>(null);
+
+  const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
+  const open = Boolean(anchorEl);
+  const id = open ? 'simple-popover' : undefined;
 
   function scrollToBottom() {
     setTimeout(() => {
@@ -113,11 +127,29 @@ function Chat(props: IChatProps) {
       <div className={classes.chat_topbar}>
         <AppBar position="static">
           <Toolbar variant="dense">
-            <Typography variant="h6" color="inherit">
-              Connected users:
+            <Button aria-describedby={id} variant="contained" color="primary" onClick={handleClick}>
+              Connected Users:
               {' '}
               {userCount}
-            </Typography>
+            </Button>
+            <Popover
+              id={id}
+              open={open}
+              anchorEl={anchorEl}
+              onClose={handleClose}
+              anchorOrigin={{
+                vertical: 'bottom',
+                horizontal: 'center',
+              }}
+              transformOrigin={{
+                vertical: 'top',
+                horizontal: 'center',
+              }}
+            >
+              {users.map((el) => (
+                <Typography className={classes.popover_username}>{el}</Typography>
+              ))}
+            </Popover>
           </Toolbar>
         </AppBar>
         <Button
@@ -187,6 +219,7 @@ const mapStateToProps = (state: IRootState) => ({
   nickname: state.nickname,
   input: state.input,
   userCount: state.userCount,
+  users: state.userList,
 });
 
 export default connect(mapStateToProps, {

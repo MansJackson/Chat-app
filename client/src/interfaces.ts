@@ -22,6 +22,11 @@ export interface IActionUserCount {
   payload: number,
 }
 
+export interface IActionUserList {
+  type: string,
+  payload: Array<string>
+}
+
 // state and props
 export interface IRootState {
   nickname: string,
@@ -29,6 +34,7 @@ export interface IRootState {
   notification: string,
   input: string,
   userCount: number,
+  userList: Array<string>
 }
 
 export interface IHomeProps {
@@ -72,15 +78,27 @@ export interface IUserCount {
   userCount: number,
 }
 
+export interface IUsers {
+  users: Array<string>
+}
+
 export interface IChatDispatchProps {
   sendMsg: (nickname: string, message: string, socket: SocketIOClient.Socket) =>
   (dispatch: Dispatch) => void,
-  setInput: (value: string) => (dispatch: Dispatch) => void,
+
   recievedMsg: (nickname: string, message: string, type: string, time: string) =>
   (dispatch: Dispatch) => void,
+
+  setInput: (value: string) => (dispatch: Dispatch) => void,
   discon: () => (dispatch: Dispatch) => void,
   notify: (message: string) => (dispatch: Dispatch) => void,
   updateUsers: () => (dispatch: Dispatch) => void,
 }
 
-export type IChatProps = IChatMessages & IChatDispatchProps & INickname & IInput & IUserCount;
+export type IChatProps =
+  IChatMessages
+  & IChatDispatchProps
+  & INickname
+  & IInput
+  & IUserCount
+  & IUsers;

@@ -76,4 +76,7 @@ export default makeStyles((theme) => ({
   message__time: {
     margin: 0,
   },
+  popover_username: {
+    padding: '.5rem 1rem',
+  },
 }));

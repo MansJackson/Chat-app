@@ -1,4 +1,4 @@
-import express from 'express';
+import express, { Request, Response } from 'express';
 import http from 'http';
 import socketIo from 'socket.io';
 import morgan from 'morgan';
@@ -24,11 +24,16 @@ const shutDown = () => {
   process.exit();
 };
 
+app.use(express.static(path.join(__dirname, '../build')));
 app.use(morgan(
   ':remote-addr - :remote-user [:date[clf]] ":method :url HTTP/:http-version" :url :status :response-time ms - :res[content-length]',
   { stream: accessLogStream },
 ));
 app.use('/api', indexRoutes);
+
+app.get('/', (_req: Request, res: Response) => {
+  res.sendFile(path.join(__dirname, '../build', 'index.html'));
+});
 
 process.on('SIGINT', () => {
   shutDown();
