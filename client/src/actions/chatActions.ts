@@ -30,7 +30,7 @@ export const disconnect = () => (dispatch: Dispatch): void => {
 };
 
 export const recievedMessage = (
-  nickname: string, message: string, type: string, time: string,
+  nickname: string, message: string, type: string,
 ) => (dispatch: Dispatch): void => {
   dispatch({
     type: ADD_MESSAGE,
@@ -38,7 +38,7 @@ export const recievedMessage = (
       nickname,
       message,
       type,
-      time,
+      time: moment().format('LT'),
     },
   });
 };

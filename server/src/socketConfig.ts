@@ -1,5 +1,4 @@
 import { Server, Namespace } from 'socket.io';
-import moment from 'moment';
 import { removeUser, addUser, logToFile } from './util';
 
 const disconnectTime = 120;
@@ -22,7 +21,7 @@ export default (io: Server): Namespace => io.on('connection', (socket: SocketIO.
     socket.broadcast.emit(
       'chat-message',
       {
-        nickname: name, message: disconnectMessage || 'left the chat', type: 'disconnect', time: moment().format('LT'),
+        nickname: name, message: disconnectMessage || 'left the chat', type: 'disconnect',
       },
     );
     removeUser(name);
@@ -36,7 +35,7 @@ export default (io: Server): Namespace => io.on('connection', (socket: SocketIO.
     socket.broadcast.emit(
       'chat-message',
       {
-        nickname: name, message: 'joined the chat', type: 'connect', time: moment().format('LT'),
+        nickname: name, message: 'joined the chat', type: 'connect',
       },
     );
     addUser(name.toLowerCase());
@@ -49,7 +48,6 @@ export default (io: Server): Namespace => io.on('connection', (socket: SocketIO.
       nickname: name,
       message,
       type: 'recieved',
-      time: moment().format('LT'),
     });
   });
 });
