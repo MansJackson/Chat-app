@@ -9,5 +9,3 @@ Typescript is used throughout for typechecking and eslint to enforce coding styl
   * clone the repo
   * `npm i && npm start` from both `client` & `server` folders
   * goto `http://localhost:3000` in multiple browser-tabs
-
-> This project was built all-in-all during 20 hours whilst at the top of different mountains in Abisko, Sweden.
