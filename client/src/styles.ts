@@ -19,6 +19,9 @@ export default makeStyles((theme) => ({
     right: '1rem',
     zIndex: 1,
   },
+  h100: {
+    minHeight: '100vh',
+  },
   sent_message: {
     backgroundColor: '#cfe8ff !important',
   },
@@ -32,12 +35,7 @@ export default makeStyles((theme) => ({
     background: 'cornflowerblue',
     padding: '1rem',
     borderRadius: '.2rem',
-  },
-  wrapper: {
-
-  },
-  h100: {
-    minHeight: '100vh',
+    zIndex: 999,
   },
   form__input: {
     padding: '12px 14px',

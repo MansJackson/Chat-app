@@ -120,18 +120,18 @@ function Chat(props: IChatProps) {
             </Typography>
           </Toolbar>
         </AppBar>
+        <Button
+          onClick={exitChat}
+          className={classes.disconnect_btn}
+          variant="contained"
+          size="small"
+          color="secondary"
+        >
+          Disconnect
+        </Button>
       </div>
-      <Button
-        onClick={exitChat}
-        className={classes.disconnect_btn}
-        variant="contained"
-        size="small"
-        color="secondary"
-      >
-        Disconnect
-      </Button>
       <Grid container justify="center" className={classes.chat}>
-        <Grid item xs={12} sm={10} md={8}>
+        <Grid item xs={12} sm={10} md={8} lg={8}>
           {messages.length > 0
             ? messages.map((el) => (
               <ChatBox
@@ -143,7 +143,7 @@ function Chat(props: IChatProps) {
             ))
             : null}
         </Grid>
-        <Grid className={classes.chat__footer} item xs={12} sm={10} md={8}>
+        <Grid className={classes.chat__footer} id="chatFooter" item xs={12} sm={10} md={8}>
           <form
             autoComplete="off"
             className={classes.chat__form}
@@ -153,20 +153,21 @@ function Chat(props: IChatProps) {
             }}
           >
             <FormControl fullWidth>
-              <InputLabel htmlFor="standard-adornment-password">Message</InputLabel>
+              <InputLabel>Message</InputLabel>
               <Input
-                id="standard-adornment-password"
+                id="message_input"
                 type="text"
                 value={input}
-                autoFocus
                 onChange={(e) => {
                   setInput(e.target.value);
-                  scrollToBottom();
                 }}
-                onFocus={scrollToBottom}
                 endAdornment={(
                   <InputAdornment position="end">
-                    <IconButton onClick={verifyMessage}>
+                    <IconButton onClick={() => {
+                      verifyMessage();
+                      scrollToBottom();
+                    }}
+                    >
                       <SendIcon />
                     </IconButton>
                   </InputAdornment>

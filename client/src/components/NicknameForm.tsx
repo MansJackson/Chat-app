@@ -33,7 +33,6 @@ function NicknameForm(props: INicknameFormProps & INicknameFormDispatch): JSX.El
             }}
             label="Nickname"
             variant="outlined"
-            autoFocus
           />
           <Button
             onClick={() => {

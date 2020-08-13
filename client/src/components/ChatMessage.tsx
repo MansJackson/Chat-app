@@ -34,8 +34,8 @@ export default function ChatMessage(
     }
     return (
       <>
-        {type === 'recieved' ? <Grid item xs={4} md={7} /> : null}
-        <Grid item xs={8} md={5}>
+        {type === 'recieved' ? <Grid item xs={4} /> : null}
+        <Grid item xs={8}>
           <Card
             className={
               `${classes.chat__message}
@@ -52,7 +52,7 @@ export default function ChatMessage(
             </CardContent>
           </Card>
         </Grid>
-        {type === 'sent' ? <Grid item xs={4} md={7} /> : null}
+        {type === 'sent' ? <Grid item xs={4} /> : null}
       </>
     );
   }

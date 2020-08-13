@@ -1,6 +1,6 @@
 import {
   isValidName, addUser, removeUser, getUsers, clearUsers,
-} from './util';
+} from './src//util';
 
 describe('Utility functions', () => {
   afterEach(() => { clearUsers(); });

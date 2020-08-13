@@ -10,7 +10,7 @@ function Home(props: IHomeProps) {
   const classes = useStyles();
 
   return (
-    <div className={classes.wrapper}>
+    <div id="home">
       {notification !== ''
         ? <div className={classes.notification}>{notification}</div>
         : null}
