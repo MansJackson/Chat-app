@@ -6,7 +6,7 @@ let users: Array<string> = [];
 export const isValidName = (name: string): boolean => !/[^A-Öa-ö]/.test(name) && name.length > 0;
 
 export const removeUser = (name: string): void => {
-  users = users.filter((el) => el !== name.toLowerCase());
+  if (name) users = users.filter((el) => el !== name.toLowerCase());
 };
 export const getUsers = (): Array<string> => users;
 export const addUser = (name: string): void => { users = [...users, name.toLowerCase()]; };

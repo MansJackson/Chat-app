@@ -1,8 +1,8 @@
 import io from 'socket.io-client';
 import http from 'http';
 import ioBack from 'socket.io';
-import { getUsers } from './src/util';
-import socketConfig from './src/socketConfig';
+import { getUsers } from '../util';
+import socketConfig from '../socketConfig';
 
 interface IChatMessage {
   nickname: string,

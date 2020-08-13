@@ -1,24 +1,20 @@
 {
-  	"compilerOptions": {
+	"compilerOptions": {
 		"module": "commonjs",
 		"esModuleInterop": true,
-		"target": "es6",
+		"target": "es5",
 		"noImplicitAny": true,
 		"moduleResolution": "node",
 		"sourceMap": true,
 		"outDir": "dist",
 		"baseUrl": ".",
+		"types": ["jest"],
+		"typeRoots": ["node_modules/@types"],
 		"paths": {
 			"*": [
 				"node_modules/*"
 			]
 		},
 		"rootDir": "src"
-	},
-	"include": [
-		"./src/**/*"
-	],
-	"exclude": [
-		"./src/**/*.test.ts"
-	]
+	}
 }

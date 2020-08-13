@@ -75,7 +75,7 @@ function Chat(props: IChatProps) {
     });
 
     socket.on('chat-message', (data: IChatMessage) => {
-      recievedMsg(data.nickname, data.message, data.type);
+      recievedMsg(data.nickname, data.message, data.type, data.time);
       updateUsers();
       scrollToBottom();
     });
@@ -139,6 +139,7 @@ function Chat(props: IChatProps) {
                 name={el.nickname}
                 message={el.message}
                 type={el.type}
+                time={el.time}
               />
             ))
             : null}

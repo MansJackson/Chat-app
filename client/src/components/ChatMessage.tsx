@@ -5,10 +5,12 @@ import {
 import useStyles from '../styles';
 
 export default function ChatMessage(
-  props: { name: string, message: string, type: string },
+  props: { name: string, message: string, type: string, time: string },
 ): JSX.Element {
   const classes = useStyles();
-  const { name, message, type } = props;
+  const {
+    name, message, type, time,
+  } = props;
 
   function renderMessage(): JSX.Element {
     if (type === 'connect') {
@@ -46,8 +48,11 @@ export default function ChatMessage(
               <Typography className={classes.message__title} color="textSecondary">
                 {name}
               </Typography>
-              <Typography variant="body2" component="p">
+              <Typography variant="body2" component="p" className={classes.message__body}>
                 {message}
+              </Typography>
+              <Typography variant="caption" component="span" color="textSecondary" className={classes.message__time}>
+                {time}
               </Typography>
             </CardContent>
           </Card>

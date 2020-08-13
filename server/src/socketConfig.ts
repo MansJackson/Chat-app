@@ -1,4 +1,5 @@
 import { Server, Namespace } from 'socket.io';
+import moment from 'moment';
 import { removeUser, addUser, logToFile } from './util';
 
 const disconnectTime = 120;
@@ -20,7 +21,9 @@ export default (io: Server): Namespace => io.on('connection', (socket: SocketIO.
     logToFile(`${socket.handshake.address} - ${name} disconnected`, 'connection.log');
     socket.broadcast.emit(
       'chat-message',
-      { nickname: name, message: disconnectMessage || 'left the chat', type: 'disconnect' },
+      {
+        nickname: name, message: disconnectMessage || 'left the chat', type: 'disconnect', time: moment().format('LT'),
+      },
     );
     removeUser(name);
     disconnectMessage = null;
@@ -32,7 +35,9 @@ export default (io: Server): Namespace => io.on('connection', (socket: SocketIO.
     logToFile(`${socket.handshake.address} - ${name} connected`, 'connection.log');
     socket.broadcast.emit(
       'chat-message',
-      { nickname: name, message: 'joined the chat', type: 'connect' },
+      {
+        nickname: name, message: 'joined the chat', type: 'connect', time: moment().format('LT'),
+      },
     );
     addUser(name.toLowerCase());
   });
@@ -40,6 +45,11 @@ export default (io: Server): Namespace => io.on('connection', (socket: SocketIO.
   socket.on('send-chat-message', ({ message }) => {
     logToFile(`${socket.handshake.address} - ${name}: ${message}`, 'messages.log');
     timeSilent = 0;
-    socket.broadcast.emit('chat-message', { nickname: name, message, type: 'recieved' });
+    socket.broadcast.emit('chat-message', {
+      nickname: name,
+      message,
+      type: 'recieved',
+      time: moment().format('LT'),
+    });
   });
 });

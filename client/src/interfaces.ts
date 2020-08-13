@@ -65,6 +65,7 @@ export interface IChatMessage {
   nickname: string,
   message: string,
   type: string,
+  time: string,
 }
 
 export interface IUserCount {
@@ -75,7 +76,8 @@ export interface IChatDispatchProps {
   sendMsg: (nickname: string, message: string, socket: SocketIOClient.Socket) =>
   (dispatch: Dispatch) => void,
   setInput: (value: string) => (dispatch: Dispatch) => void,
-  recievedMsg: (nickname: string, message: string, type: string) => (dispatch: Dispatch) => void,
+  recievedMsg: (nickname: string, message: string, type: string, time: string) =>
+  (dispatch: Dispatch) => void,
   discon: () => (dispatch: Dispatch) => void,
   notify: (message: string) => (dispatch: Dispatch) => void,
   updateUsers: () => (dispatch: Dispatch) => void,

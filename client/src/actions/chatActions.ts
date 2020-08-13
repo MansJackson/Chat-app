@@ -1,4 +1,5 @@
 import { Dispatch } from 'redux';
+import moment from 'moment';
 import {
   ADD_MESSAGE, SET_NICKNAME, CLEAR_MESSAGES,
 } from './types';
@@ -13,6 +14,7 @@ export const sendMessage = (
       nickname: 'You',
       message,
       type: 'sent',
+      time: moment().format('LT'),
     },
   });
 };
@@ -28,7 +30,7 @@ export const disconnect = () => (dispatch: Dispatch): void => {
 };
 
 export const recievedMessage = (
-  nickname: string, message: string, type: string,
+  nickname: string, message: string, type: string, time: string,
 ) => (dispatch: Dispatch): void => {
   dispatch({
     type: ADD_MESSAGE,
@@ -36,6 +38,7 @@ export const recievedMessage = (
       nickname,
       message,
       type,
+      time,
     },
   });
 };

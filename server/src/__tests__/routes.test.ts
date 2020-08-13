@@ -1,6 +1,6 @@
 import request from 'supertest';
-import { addUser } from './src/util';
-import { server, app } from './src/index';
+import { addUser } from '../util';
+import { server, app } from '../index';
 
 afterAll(() => {
   server.close();

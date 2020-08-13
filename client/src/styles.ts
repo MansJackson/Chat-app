@@ -67,6 +67,13 @@ export default makeStyles((theme) => ({
     textAlign: 'left',
   },
   message__title: {
-    fontSize: 14,
+    fontSize: 18,
+  },
+  message__body: {
+    margin: '.5rem 0',
+    fontSize: 18,
+  },
+  message__time: {
+    margin: 0,
   },
 }));
