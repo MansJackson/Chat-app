@@ -5,6 +5,7 @@ import notificationReducer from './notificationReducer';
 import inputReducer from './inputReducer';
 import userCountReducer from './userCountReducer';
 import usersReducer from './usersReducer';
+import socketReducer from './socketReducer';
 
 export default combineReducers({
   nickname: nicknameReducer,
@@ -13,4 +14,5 @@ export default combineReducers({
   input: inputReducer,
   userCount: userCountReducer,
   userList: usersReducer,
+  socket: socketReducer,
 });

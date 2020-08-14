@@ -1,59 +1,32 @@
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
-import io from 'socket.io-client';
 import { v4 as uuidv4 } from 'uuid';
-import {
-  Input,
-  FormControl,
-  InputLabel,
-  InputAdornment,
-  IconButton,
-  Grid,
-  Button,
-  AppBar,
-  Toolbar,
-  Typography,
-  Popover,
-} from '@material-ui/core';
-import SendIcon from '@material-ui/icons/Send';
+import { Grid, Button } from '@material-ui/core';
 import useStyles from '../styles';
-
-import { sendMessage, recievedMessage, disconnect } from '../actions/chatActions';
-import updateUserCount from '../actions/userCountActions';
-import notification from '../actions/notificationActions';
-import updateInput from '../actions/inputActions';
-import ChatBox from './ChatMessage';
 import { IChatProps, IChatMessage, IRootState } from '../interfaces';
 
-let socket: SocketIOClient.Socket;
+import { recievedMessage, disconnect } from '../actions/chatActions';
+import updateUserCount from '../actions/userCountActions';
+import ChatBox from './ChatMessage';
+import ChatTopbar from './ChatTopbar';
+import ChatMessageInput from './ChatMessageInput';
+import updateInput from '../actions/inputActions';
+import notification from '../actions/notificationActions';
+import createSocket from '../actions/socketActions';
 
 function Chat(props: IChatProps) {
   const {
-    users,
-    userCount,
     nickname,
     messages,
-    input,
-    sendMsg,
+    socket,
     recievedMsg,
     setInput,
     discon,
     notify,
     updateUsers,
+    connectSocket,
   } = props;
   const classes = useStyles();
-  const [anchorEl, setAnchorEl] = React.useState<HTMLButtonElement | null>(null);
-
-  const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
-    setAnchorEl(event.currentTarget);
-  };
-
-  const handleClose = () => {
-    setAnchorEl(null);
-  };
-
-  const open = Boolean(anchorEl);
-  const id = open ? 'simple-popover' : undefined;
 
   function scrollToBottom() {
     setTimeout(() => {
@@ -63,7 +36,12 @@ function Chat(props: IChatProps) {
 
   useEffect(() => {
     setInput('');
-    socket = io(window.location.href, { reconnection: false });
+    connectSocket();
+    // eslint-disable-next-line
+  }, []);
+
+  useEffect(() => {
+    if (!socket) return;
 
     socket.on('connect', () => {
       socket.emit('nickname', nickname);
@@ -106,15 +84,7 @@ function Chat(props: IChatProps) {
       notify(message);
     });
     // eslint-disable-next-line
-  }, []);
-
-  function verifyMessage() {
-    if (input.trim().length > 0) {
-      sendMsg(nickname, input, socket);
-      scrollToBottom();
-    } else notify('Message can not be empty');
-    setInput('');
-  }
+  }, [socket]);
 
   function exitChat() {
     socket.close();
@@ -125,33 +95,7 @@ function Chat(props: IChatProps) {
   return (
     <>
       <div className={classes.chat_topbar}>
-        <AppBar position="static">
-          <Toolbar variant="dense">
-            <Button aria-describedby={id} variant="contained" color="primary" onClick={handleClick}>
-              Connected Users:
-              {' '}
-              {userCount}
-            </Button>
-            <Popover
-              id={id}
-              open={open}
-              anchorEl={anchorEl}
-              onClose={handleClose}
-              anchorOrigin={{
-                vertical: 'bottom',
-                horizontal: 'center',
-              }}
-              transformOrigin={{
-                vertical: 'top',
-                horizontal: 'center',
-              }}
-            >
-              {users.map((el) => (
-                <Typography className={classes.popover_username}>{el}</Typography>
-              ))}
-            </Popover>
-          </Toolbar>
-        </AppBar>
+        <ChatTopbar />
         <Button
           onClick={exitChat}
           className={classes.disconnect_btn}
@@ -176,39 +120,7 @@ function Chat(props: IChatProps) {
             ))
             : null}
         </Grid>
-        <Grid className={classes.chat__footer} id="chatFooter" item xs={12} sm={10} md={8}>
-          <form
-            autoComplete="off"
-            className={classes.chat__form}
-            onSubmit={(e) => {
-              e.preventDefault();
-              verifyMessage();
-            }}
-          >
-            <FormControl fullWidth>
-              <InputLabel>Message</InputLabel>
-              <Input
-                id="message_input"
-                type="text"
-                value={input}
-                onChange={(e) => {
-                  setInput(e.target.value);
-                }}
-                endAdornment={(
-                  <InputAdornment position="end">
-                    <IconButton onClick={() => {
-                      verifyMessage();
-                      scrollToBottom();
-                    }}
-                    >
-                      <SendIcon />
-                    </IconButton>
-                  </InputAdornment>
-                )}
-              />
-            </FormControl>
-          </form>
-        </Grid>
+        <ChatMessageInput />
       </Grid>
     </>
   );
@@ -217,17 +129,15 @@ function Chat(props: IChatProps) {
 const mapStateToProps = (state: IRootState) => ({
   messages: state.messages,
   nickname: state.nickname,
-  input: state.input,
-  userCount: state.userCount,
-  users: state.userList,
+  socket: state.socket,
 });
 
 export default connect(mapStateToProps, {
-  sendMsg: sendMessage,
   recievedMsg: recievedMessage,
-  setInput: updateInput,
   discon: disconnect,
-  notify: notification,
   updateUsers: updateUserCount,
+  setInput: updateInput,
+  notify: notification,
+  connectSocket: createSocket,
   // @ts-ignore
 })(Chat);

@@ -6,3 +6,4 @@ export const SET_INPUT = 'SET_INPUT';
 export const CLEAR_MESSAGES = 'CLEAR_MESSAGES';
 export const SET_USERCOUNT = 'SET_USERCOUNT';
 export const SET_USERLIST = 'SET_USERLIST';
+export const CREATE_SOCKET = 'CREATE_SOCKET';

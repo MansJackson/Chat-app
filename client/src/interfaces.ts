@@ -1,5 +1,9 @@
 import { Dispatch } from 'redux';
 
+export interface ISocket {
+  socket: SocketIOClient.Socket,
+}
+
 // API responses
 export interface IValidNameResponse {
   valid: boolean,
@@ -27,6 +31,11 @@ export interface IActionUserList {
   payload: Array<string>
 }
 
+export interface ISocketAction {
+  type: string,
+  payload: SocketIOClient.Socket,
+}
+
 // state and props
 export interface IRootState {
   nickname: string,
@@ -34,7 +43,8 @@ export interface IRootState {
   notification: string,
   input: string,
   userCount: number,
-  userList: Array<string>
+  userList: Array<string>,
+  socket: SocketIOClient.Socket,
 }
 
 export interface IHomeProps {
@@ -83,9 +93,6 @@ export interface IUsers {
 }
 
 export interface IChatDispatchProps {
-  sendMsg: (nickname: string, message: string, socket: SocketIOClient.Socket) =>
-  (dispatch: Dispatch) => void,
-
   recievedMsg: (nickname: string, message: string, type: string, time: string) =>
   (dispatch: Dispatch) => void,
 
@@ -93,6 +100,14 @@ export interface IChatDispatchProps {
   discon: () => (dispatch: Dispatch) => void,
   notify: (message: string) => (dispatch: Dispatch) => void,
   updateUsers: () => (dispatch: Dispatch) => void,
+  connectSocket: () => (dispatch: Dispatch) => void,
+}
+
+export interface IChatMessageInputDispatch {
+  setInput: (value: string) => (dispatch: Dispatch) => void,
+  notify: (message: string) => (dispatch: Dispatch) => void,
+  sendMsg: (nickname: string, message: string, socket: SocketIOClient.Socket) =>
+  (dispatch: Dispatch) => void,
 }
 
 export type IChatProps =
@@ -100,5 +115,7 @@ export type IChatProps =
   & IChatDispatchProps
   & INickname
   & IInput
-  & IUserCount
-  & IUsers;
+  & ISocket;
+
+export type IChatTopbarProps = IUserCount & IUsers;
+export type IChatMessageInputProps = INickname & IInput & ISocket;
