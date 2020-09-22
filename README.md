@@ -1,7 +1,5 @@
 # Chat application
 
-### It is what it is...
-
 A simple chat application build using React, Redux, Express and socket.io
 Typescript is used throughout for typechecking and eslint to enforce coding style
 
